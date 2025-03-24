@@ -1,11 +1,6 @@
-'use client'
-
-import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { FaArrowLeft, FaGamepad, FaPlay, FaExpand, FaCompress } from 'react-icons/fa'
-import { Game } from '@/lib/storage'
-import Link from 'next/link'
 import { readGamesData } from '@/utils/gameData'
+import { FaArrowLeft } from 'react-icons/fa'
+import Link from 'next/link'
 
 export async function generateStaticParams() {
   const games = readGamesData()
@@ -14,65 +9,9 @@ export async function generateStaticParams() {
   }))
 }
 
-export default function GamePage({ params }: { params: { id: string } }) {
-  const router = useRouter()
-  const [game, setGame] = useState<Game | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [isFullscreen, setIsFullscreen] = useState(false)
-
-  useEffect(() => {
-    fetchGame()
-    
-    const handleFullscreenChange = () => {
-      setIsFullscreen(document.fullscreenElement !== null)
-    }
-
-    document.addEventListener('fullscreenchange', handleFullscreenChange)
-    return () => {
-      document.removeEventListener('fullscreenchange', handleFullscreenChange)
-    }
-  }, [params.id])
-
-  const toggleFullscreen = async () => {
-    try {
-      const gameContainer = document.getElementById('game-container')
-      if (!gameContainer) return
-
-      if (!isFullscreen) {
-        await gameContainer.requestFullscreen()
-      } else {
-        await document.exitFullscreen()
-      }
-    } catch (error) {
-      console.error('Error toggling fullscreen:', error)
-    }
-  }
-
-  const fetchGame = async () => {
-    try {
-      const games = readGamesData()
-      const foundGame = games.find((g) => g.id === params.id)
-      if (!foundGame) {
-        throw new Error('Game not found')
-      }
-      setGame(foundGame)
-    } catch (error) {
-      console.error('Error fetching game:', error)
-      router.push('/')
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-[#0B1015] text-white flex items-center justify-center">
-        <div className="animate-spin text-apple-blue">
-          <FaGamepad className="h-8 w-8" />
-        </div>
-      </div>
-    )
-  }
+export default async function GamePage({ params }: { params: { id: string } }) {
+  const games = readGamesData()
+  const game = games.find((g) => g.id === params.id)
 
   if (!game) {
     return (
@@ -98,7 +37,7 @@ export default function GamePage({ params }: { params: { id: string } }) {
               className="flex items-center text-gray-400 hover:text-white transition-colors"
             >
               <FaArrowLeft className="h-4 w-4 mr-2" />
-              Back to Games
+              返回首页
             </Link>
           </div>
         </div>
@@ -112,10 +51,10 @@ export default function GamePage({ params }: { params: { id: string } }) {
             <h1 className="text-xl font-bold">{game.title}</h1>
             <div className="flex items-center space-x-4">
               <span className="text-sm text-gray-400">
-                Category: {game.category}
+                分类: {game.category}
               </span>
               <span className="text-sm text-gray-400">
-                Plays: {game.playCount}
+                游玩次数: {game.playCount}
               </span>
             </div>
           </div>
@@ -127,17 +66,6 @@ export default function GamePage({ params }: { params: { id: string } }) {
               className="absolute inset-0 w-full h-full"
               allowFullScreen
             />
-            <button
-              onClick={toggleFullscreen}
-              className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/70 rounded-full transition-colors duration-200 text-white"
-              title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
-            >
-              {isFullscreen ? (
-                <FaCompress className="w-5 h-5" />
-              ) : (
-                <FaExpand className="w-5 h-5" />
-              )}
-            </button>
           </div>
 
           {/* Game Info */}
@@ -147,33 +75,26 @@ export default function GamePage({ params }: { params: { id: string } }) {
                 <span className="px-3 py-1 bg-[#7B68EE] text-white text-sm rounded-full">
                   {game.category}
                 </span>
-                <span className="text-gray-400 text-sm">
-                  Added: {new Date(game.addedDate).toLocaleDateString()}
-                </span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <FaPlay className="text-apple-blue" />
-                <span className="text-gray-400">{game.playCount} plays</span>
               </div>
             </div>
 
             <div className="mt-6">
-              <h2 className="text-lg font-semibold mb-3">About This Game</h2>
+              <h2 className="text-lg font-semibold mb-3">关于游戏</h2>
               <p className="text-gray-400">
-                {game.title} is an exciting online game that you can play right in your browser. 
-                Jump into this {game.category.toLowerCase()} game and start your adventure! 
-                No downloads required - just click play and enjoy the game.
+                {game.description || `${game.title} 是一个精彩的在线游戏，你可以直接在浏览器中玩。
+                快来体验这款 ${game.category.toLowerCase()} 游戏的乐趣吧！
+                无需下载 - 点击即玩。`}
               </p>
             </div>
 
             <div className="mt-6">
-              <h2 className="text-lg font-semibold mb-3">How to Play</h2>
+              <h2 className="text-lg font-semibold mb-3">游戏说明</h2>
               <div className="bg-[#232830] rounded-lg p-4">
                 <p className="text-gray-400">
-                  1. Click the game window to start<br />
-                  2. Use your mouse and keyboard to control the game<br />
-                  3. Some games may need to load first - please be patient<br />
-                  4. Have fun and try to beat your high score!
+                  1. 点击游戏窗口开始游戏<br />
+                  2. 使用鼠标和键盘控制游戏<br />
+                  3. 部分游戏可能需要加载时间 - 请耐心等待<br />
+                  4. 玩得开心，创造新的高分！
                 </p>
               </div>
             </div>
