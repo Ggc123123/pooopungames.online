@@ -1,18 +1,8 @@
 import fs from 'fs'
 import path from 'path'
+import { Game } from '@/types/game'
 
 const DATA_FILE = path.join(process.cwd(), 'src/data/games.json')
-
-export interface Game {
-  id: number
-  title: string
-  category: string
-  iframeUrl: string
-  status: string
-  addedDate: string
-  playCount: number
-  thumbnail: string
-}
 
 export interface Stats {
   totalVisits: number
@@ -21,7 +11,7 @@ export interface Stats {
   todayPlays: number
   activeUsers: number
   mostPlayedGame: {
-    id: number
+    id: string
     title: string
   } | null
 }
@@ -74,20 +64,21 @@ export class Storage {
     }
   }
 
-  // 游戏相关方法
   public getGames(): Game[] {
     return this.data.games
   }
 
-  public getGame(id: number): Game | undefined {
+  public getGame(id: string): Game | undefined {
     return this.data.games.find(game => game.id === id)
   }
 
-  public addGame(game: Omit<Game, 'id' | 'addedDate' | 'playCount'>): Game {
+  public addGame(game: Omit<Game, 'id' | 'createdAt' | 'updatedAt' | 'playCount'>): Game {
+    const now = new Date().toISOString()
     const newGame: Game = {
       ...game,
-      id: Math.max(0, ...this.data.games.map(g => g.id)) + 1,
-      addedDate: new Date().toISOString().split('T')[0],
+      id: Math.random().toString(36).substr(2, 9),
+      createdAt: now,
+      updatedAt: now,
       playCount: 0
     }
     this.data.games.push(newGame)
@@ -95,19 +86,20 @@ export class Storage {
     return newGame
   }
 
-  public updateGame(id: number, updates: Partial<Game>): Game | null {
+  public updateGame(id: string, updates: Partial<Game>): Game | null {
     const index = this.data.games.findIndex(game => game.id === id)
     if (index === -1) return null
 
     this.data.games[index] = {
       ...this.data.games[index],
-      ...updates
+      ...updates,
+      updatedAt: new Date().toISOString()
     }
     this.saveData()
     return this.data.games[index]
   }
 
-  public deleteGame(id: number): boolean {
+  public deleteGame(id: string): boolean {
     const initialLength = this.data.games.length
     this.data.games = this.data.games.filter(game => game.id !== id)
     if (this.data.games.length !== initialLength) {
@@ -117,7 +109,6 @@ export class Storage {
     return false
   }
 
-  // 统计相关方法
   public getStats(): Stats {
     return this.data.stats
   }
