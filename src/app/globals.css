@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 17, 24, 39;
+  --background-end-rgb: 31, 41, 55;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+    to bottom,
+    rgb(var(--background-start-rgb)),
+    rgb(var(--background-end-rgb))
+  );
+  min-height: 100vh;
+}
+
+/* Custom animations */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Custom styles for game cards */
+.game-card {
+  @apply relative overflow-hidden rounded-lg shadow-lg transition-all duration-300;
+}
+
+.game-card:hover {
+  @apply transform scale-105 shadow-xl;
+}
+
+.game-card-overlay {
+  @apply absolute inset-0 bg-black bg-opacity-40 opacity-0 transition-opacity duration-300;
+}
+
+.game-card:hover .game-card-overlay {
+  @apply opacity-100;
+}
+
+/* Custom button styles */
+.btn-primary {
+  @apply bg-blue-600 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-300;
+}
+
+.btn-secondary {
+  @apply bg-gray-600 text-white font-medium py-2 px-4 rounded-md hover:bg-gray-700 transition-colors duration-300;
+} 

@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Game {
+  id          Int        @id @default(autoincrement())
+  title       String
+  category    String
+  iframeUrl   String
+  description String?
+  thumbnail   String?
+  status      String     @default("active")
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  plays       GamePlay[]
+}
+
+model GamePlay {
+  id        Int      @id @default(autoincrement())
+  gameId    Int
+  game      Game     @relation(fields: [gameId], references: [id])
+  userId    String?  // 可选，因为可能是未登录用户
+  createdAt DateTime @default(now())
+}
+
+model PageView {
+  id        Int      @id @default(autoincrement())
+  path      String
+  userId    String?
+  createdAt DateTime @default(now())
+}
+
+model UserSession {
+  id           Int      @id @default(autoincrement())
+  userId       String   @unique
+  lastActivity DateTime @default(now())
+  createdAt    DateTime @default(now())
+} 

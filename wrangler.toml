@@ -1,0 +1,16 @@
+name = "pooopungames"
+compatibility_date = "2024-03-24"
+
+[build]
+command = "npm run build"
+cwd = "."
+dist = ".next"
+
+[site]
+bucket = ".next/static"
+entry-point = "."
+
+[env.production]
+routes = [
+  { pattern = "pooopungames.online", custom_domain = true }
+] 

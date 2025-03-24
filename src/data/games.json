@@ -1,0 +1,92 @@
+{
+  "games": [
+    {
+      "title": "Survival Island",
+      "category": "Action",
+      "iframeUrl": "https://cloud.onlinegames.io/games/2024/unity2/survival-island/index-og.html",
+      "thumbnail": "https://www.onlinegames.io/media/posts/970/responsive/Survival-Island-lg.jpg",
+      "status": "active",
+      "id": 1,
+      "addedDate": "2025-03-24",
+      "playCount": 0
+    },
+    {
+      "title": "Mahjong",
+      "category": "Adventure",
+      "iframeUrl": "https://cloud.onlinegames.io/games/2025/unity/mahjong/index-og.html",
+      "thumbnail": "https://www.onlinegames.io/media/posts/966/responsive/Mahjong-lg.jpg",
+      "status": "active",
+      "id": 2,
+      "addedDate": "2025-03-24",
+      "playCount": 0
+    },
+    {
+      "title": "Tank Arena By OnlineGames.io",
+      "category": "Board",
+      "iframeUrl": "https://cloud.onlinegames.io/games/2025/construct/293/tank-arena/index-og.html",
+      "thumbnail": "https://www.onlinegames.io/media/posts/956/responsive/Tank-Arena-Online-lg.jpg",
+      "status": "active",
+      "id": 3,
+      "addedDate": "2025-03-24",
+      "playCount": 0
+    },
+    {
+      "title": "Monster Survivors",
+      "category": "Action",
+      "iframeUrl": "https://cloud.onlinegames.io/games/2025/unity/monster-survivors/index-og.html",
+      "thumbnail": "https://www.onlinegames.io/media/posts/942/responsive/Monster-survivors-lg.jpg",
+      "status": "active",
+      "id": 4,
+      "addedDate": "2025-03-24",
+      "playCount": 0
+    },
+    {
+      "title": "SpartaHoppers By OnlineGames.io",
+      "category": "Arcade",
+      "iframeUrl": "https://cloud.onlinegames.io/games/2025/construct/227/spartahoppers/index-og.html",
+      "thumbnail": "https://www.onlinegames.io/media/posts/949/responsive/sparta-hoppers-game-lg.jpg",
+      "status": "active",
+      "id": 5,
+      "addedDate": "2025-03-24",
+      "playCount": 0
+    },
+    {
+      "title": "Monster Truck Mountain Climb",
+      "category": "Arcade",
+      "iframeUrl": "https://cloud.onlinegames.io/games/2021/2/monster-truck-mountain-climb/index-og.html",
+      "thumbnail": "https://www.onlinegames.io/media/posts/924/responsive/monster-truck-mountain-climb-lg.jpg",
+      "status": "active",
+      "id": 6,
+      "addedDate": "2025-03-24",
+      "playCount": 0
+    },
+    {
+      "title": "Car Football",
+      "category": "Simulation",
+      "iframeUrl": "https://www.onlinegames.io/games/2023/construct/198/car-football/index.html",
+      "thumbnail": "https://www.onlinegames.io/media/posts/405/responsive/Car-Football-lg.jpg",
+      "status": "active",
+      "id": 7,
+      "addedDate": "2025-03-24",
+      "playCount": 0
+    },
+    {
+      "title": "Highway Cars",
+      "category": "Action",
+      "iframeUrl": " https://www.onlinegames.io/games/2023/construct/211/highway-cars/index.html",
+      "thumbnail": "https://www.onlinegames.io/media/posts/598/responsive/Highway-Cars-lg.jpg",
+      "status": "active",
+      "id": 8,
+      "addedDate": "2025-03-24",
+      "playCount": 0
+    }
+  ],
+  "stats": {
+    "totalVisits": 0,
+    "todayVisits": 0,
+    "totalPlays": 0,
+    "todayPlays": 0,
+    "activeUsers": 0,
+    "mostPlayedGame": null
+  }
+}
