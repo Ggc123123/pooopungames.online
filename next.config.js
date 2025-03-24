@@ -11,8 +11,7 @@ const nextConfig = {
       'imgs2.dab3games.com',
       'games.poki.com'
     ]
-  },
-  basePath: process.env.NODE_ENV === 'production' ? '/pooopungames.online' : '',
+  }
 }
 
 module.exports = nextConfig 

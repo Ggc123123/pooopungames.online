@@ -1,29 +1,26 @@
 import { NextResponse } from 'next/server'
 import { Storage } from '@/lib/storage'
+import { readGamesData } from '@/utils/gameData'
+
+export async function generateStaticParams() {
+  const games = readGamesData()
+  return games.map((game) => ({
+    id: game.id,
+  }))
+}
 
 export async function GET(
   request: Request,
   { params }: { params: { id: string } }
 ) {
-  try {
-    const storage = Storage.getInstance()
-    const game = storage.getGame(Number(params.id))
-    
-    if (!game) {
-      return NextResponse.json(
-        { error: '游戏不存在' },
-        { status: 404 }
-      )
-    }
+  const games = readGamesData()
+  const game = games.find((g) => g.id === params.id)
 
-    return NextResponse.json(game)
-  } catch (error) {
-    console.error('Error fetching game:', error)
-    return NextResponse.json(
-      { error: '获取游戏信息失败' },
-      { status: 500 }
-    )
+  if (!game) {
+    return NextResponse.json({ error: 'Game not found' }, { status: 404 })
   }
+
+  return NextResponse.json(game)
 }
 
 export async function PUT(

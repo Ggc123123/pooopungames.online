@@ -5,6 +5,14 @@ import { useRouter } from 'next/navigation'
 import { FaArrowLeft, FaGamepad, FaPlay, FaExpand, FaCompress } from 'react-icons/fa'
 import { Game } from '@/lib/storage'
 import Link from 'next/link'
+import { readGamesData } from '@/utils/gameData'
+
+export async function generateStaticParams() {
+  const games = readGamesData()
+  return games.map((game) => ({
+    id: game.id,
+  }))
+}
 
 export default function GamePage({ params }: { params: { id: string } }) {
   const router = useRouter()
@@ -42,12 +50,12 @@ export default function GamePage({ params }: { params: { id: string } }) {
 
   const fetchGame = async () => {
     try {
-      const response = await fetch(`/api/games/${params.id}`)
-      if (!response.ok) {
+      const games = readGamesData()
+      const foundGame = games.find((g) => g.id === params.id)
+      if (!foundGame) {
         throw new Error('Game not found')
       }
-      const data = await response.json()
-      setGame(data)
+      setGame(foundGame)
     } catch (error) {
       console.error('Error fetching game:', error)
       router.push('/')
@@ -67,7 +75,16 @@ export default function GamePage({ params }: { params: { id: string } }) {
   }
 
   if (!game) {
-    return null
+    return (
+      <div className="min-h-screen bg-gray-100 p-4">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-2xl font-bold text-red-600">游戏不存在</h1>
+          <Link href="/" className="text-blue-600 hover:underline mt-4 inline-block">
+            返回首页
+          </Link>
+        </div>
+      </div>
+    )
   }
 
   return (
