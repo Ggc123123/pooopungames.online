@@ -5,7 +5,7 @@ import { readGamesData } from '@/utils/gameData'
 export async function generateStaticParams() {
   const games = readGamesData()
   return games.map((game) => ({
-    id: game.id,
+    id: String(game.id)
   }))
 }
 
@@ -14,7 +14,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   const games = readGamesData()
-  const game = games.find((g) => g.id === params.id)
+  const game = games.find((g) => String(g.id) === params.id)
 
   if (!game) {
     return NextResponse.json({ error: 'Game not found' }, { status: 404 })

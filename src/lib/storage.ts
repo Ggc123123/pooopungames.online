@@ -27,6 +27,11 @@ export class Storage {
 
   private constructor() {
     this.data = this.readData()
+    // 确保所有游戏的 ID 都是字符串类型
+    this.data.games = this.data.games.map((game: Game) => ({
+      ...game,
+      id: String(game.id)
+    }))
   }
 
   public static getInstance(): Storage {
@@ -39,7 +44,13 @@ export class Storage {
   private readData(): StorageData {
     try {
       const rawData = fs.readFileSync(DATA_FILE, 'utf-8')
-      return JSON.parse(rawData)
+      const data = JSON.parse(rawData)
+      // 确保所有游戏的 ID 都是字符串类型
+      data.games = data.games.map((game: Game) => ({
+        ...game,
+        id: String(game.id)
+      }))
+      return data
     } catch (error) {
       console.error('Error reading data file:', error)
       return {
@@ -69,7 +80,7 @@ export class Storage {
   }
 
   public getGame(id: string): Game | undefined {
-    return this.data.games.find(game => game.id === id)
+    return this.data.games.find(game => String(game.id) === id)
   }
 
   public addGame(game: Omit<Game, 'id' | 'createdAt' | 'updatedAt' | 'playCount'>): Game {
@@ -87,7 +98,7 @@ export class Storage {
   }
 
   public updateGame(id: string, updates: Partial<Game>): Game | null {
-    const index = this.data.games.findIndex(game => game.id === id)
+    const index = this.data.games.findIndex(game => String(game.id) === id)
     if (index === -1) return null
 
     this.data.games[index] = {
@@ -101,7 +112,7 @@ export class Storage {
 
   public deleteGame(id: string): boolean {
     const initialLength = this.data.games.length
-    this.data.games = this.data.games.filter(game => game.id !== id)
+    this.data.games = this.data.games.filter(game => String(game.id) !== id)
     if (this.data.games.length !== initialLength) {
       this.saveData()
       return true
