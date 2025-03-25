@@ -125,7 +125,7 @@ export default function HomePage() {
                       </div>
                     </div>
                     <p className="text-sm text-gray-400 mb-2">
-                      Added: {new Date(game.addedDate).toLocaleDateString()}
+                      Added: {game.addedDate ? new Date(game.addedDate).toLocaleDateString() : 'Recently'}
                     </p>
                     <p className="text-sm text-gray-400 mb-4">
                       Category: {game.category}
