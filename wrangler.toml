@@ -4,8 +4,7 @@ compatibility_date = "2024-03-24"
 [build]
 command = "npm run build"
 cwd = "."
-dist = ".next"
-pages_build_output_dir = "out"
+output_dir = "out"
 
 [site]
 bucket = ".next/static"
