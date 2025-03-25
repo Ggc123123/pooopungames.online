@@ -47,11 +47,11 @@ export default function GamesManagement() {
     router.push('/admin/games/add')
   }
 
-  const handleEditGame = (id: number) => {
+  const handleEditGame = (id: string) => {
     router.push(`/admin/games/edit/${id}`)
   }
 
-  const handleDeleteGame = async (id: number) => {
+  const handleDeleteGame = async (id: string) => {
     if (!confirm('确定要删除这个游戏吗？')) return
 
     try {

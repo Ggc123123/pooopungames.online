@@ -8,4 +8,6 @@ export interface Game {
   playCount: number;
   createdAt: string;
   updatedAt: string;
+  status: 'active' | 'inactive';
+  addedDate: string;
 } 
