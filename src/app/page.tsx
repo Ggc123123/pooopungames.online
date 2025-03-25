@@ -5,7 +5,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaGamepad, FaFire, FaStar } from 'react-icons/fa'
-import { Game } from '@/lib/storage'
+import { Game } from '@/types/game'
 
 export default function HomePage() {
   const [games, setGames] = useState<Game[]>([])
