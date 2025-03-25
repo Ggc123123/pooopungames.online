@@ -11,6 +11,16 @@ const nextConfig = {
       'imgs2.dab3games.com',
       'games.poki.com'
     ]
+  },
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.json$/,
+      type: 'json'
+    })
+    return config
+  },
+  publicRuntimeConfig: {
+    staticFolder: '/data',
   }
 }
 

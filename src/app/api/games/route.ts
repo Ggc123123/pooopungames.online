@@ -1,12 +1,9 @@
 import { NextResponse } from 'next/server'
-import { Storage } from '@/lib/storage'
-import { Game } from '@/types/game'
+import gamesData from '@/data/games.json'
 
 export async function GET() {
   try {
-    const storage = Storage.getInstance()
-    const games = storage.getGames()
-    return NextResponse.json(games)
+    return NextResponse.json(gamesData.games)
   } catch (error) {
     console.error('Error fetching games:', error)
     return NextResponse.json(
@@ -18,7 +15,6 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const storage = Storage.getInstance()
     const data = await request.json()
     
     // 验证必需字段
@@ -32,17 +28,28 @@ export async function POST(request: Request) {
       )
     }
 
-    // 添加游戏
-    try {
-      const newGame = storage.addGame(data)
-      return NextResponse.json(newGame)
-    } catch (storageError) {
-      console.error('Error saving game data:', storageError)
+    // 检查标题是否已存在
+    const existingGame = gamesData.games.find(
+      game => game.title.toLowerCase() === data.title.toLowerCase()
+    )
+    if (existingGame) {
       return NextResponse.json(
-        { error: '保存游戏数据失败，请检查文件权限' },
-        { status: 500 }
+        { error: '游戏标题已存在' },
+        { status: 400 }
       )
     }
+
+    const now = new Date().toISOString()
+    const newGame = {
+      ...data,
+      id: Math.random().toString(36).substr(2, 9),
+      createdAt: now,
+      updatedAt: now,
+      playCount: 0,
+      addedDate: now
+    }
+
+    return NextResponse.json(newGame)
   } catch (error) {
     console.error('Error processing request:', error)
     return NextResponse.json(

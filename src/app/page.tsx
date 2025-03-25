@@ -9,25 +9,30 @@ import { Game } from '@/types/game'
 
 export default function HomePage() {
   const [games, setGames] = useState<Game[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    const fetchGames = async () => {
+      try {
+        const response = await fetch('/api/games')
+        if (!response.ok) {
+          throw new Error('获取游戏列表失败')
+        }
+        const data = await response.json()
+        setGames(data)
+      } catch (err) {
+        console.error('Error fetching games:', err)
+        setError(err instanceof Error ? err.message : '获取游戏列表失败')
+      } finally {
+        setLoading(false)
+      }
+    }
+
     fetchGames()
   }, [])
 
-  const fetchGames = async () => {
-    try {
-      const response = await fetch('/api/games')
-      const data = await response.json()
-      setGames(data.filter((game: Game) => game.status === 'active'))
-    } catch (error) {
-      console.error('Error fetching games:', error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="min-h-screen bg-[#0B1015] text-white flex items-center justify-center">
         <div className="animate-spin text-apple-blue">
@@ -75,47 +80,52 @@ export default function HomePage() {
         <section className="mb-16">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-2xl font-bold flex items-center">
-              <FaFire className="mr-2 text-apple-blue" />
+              <FaGamepad className="mr-2 text-apple-blue" />
               Featured Games
             </h2>
+            <Link
+              href="/add"
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            >
+              Add Game
+            </Link>
           </div>
-          
-          {games.length === 0 ? (
-            <div className="text-center py-12 bg-gray-800/50 rounded-lg">
-              <FaGamepad className="mx-auto h-12 w-12 text-gray-400" />
-              <h3 className="mt-4 text-lg font-medium text-gray-400">No Games Available</h3>
-              <p className="mt-2 text-sm text-gray-500">Stay tuned for exciting games coming soon!</p>
+
+          {loading ? (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mx-auto"></div>
+              <p className="mt-4 text-gray-400">加载中...</p>
+            </div>
+          ) : error ? (
+            <div className="text-center py-12">
+              <p className="text-red-500">{error}</p>
+            </div>
+          ) : games.length === 0 ? (
+            <div className="text-center py-12">
+              <div className="text-6xl mb-4">🎮</div>
+              <h3 className="text-xl font-semibold mb-2">No Games Available 没有可用的游戏</h3>
+              <p className="text-gray-400">Stay tuned for exciting games coming soon!</p>
+              <p className="text-gray-400">请继续关注即将推出的精彩游戏！</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {games.map((game) => (
                 <div
                   key={game.id}
-                  className="group bg-[#1A1D24] rounded-lg overflow-hidden hover:ring-1 hover:ring-apple-blue transition-all duration-300"
+                  className="bg-gray-800 rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
                 >
-                  <div className="relative aspect-[4/3]">
-                    {game.thumbnail ? (
-                      <Image
-                        src={game.thumbnail}
-                        alt={game.title}
-                        fill
-                        className="object-cover transform group-hover:scale-110 transition-transform duration-300"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        priority
-                      />
-                    ) : (
-                      <div className="absolute inset-0 bg-gray-700 flex items-center justify-center">
-                        <FaGamepad className="h-12 w-12 text-gray-500" />
-                      </div>
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#1A1D24] to-transparent opacity-50"></div>
+                  <div className="relative h-48">
+                    <Image
+                      src={game.thumbnail}
+                      alt={game.title}
+                      fill
+                      className="object-cover"
+                    />
                   </div>
                   <div className="p-4">
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="font-medium text-lg text-white group-hover:text-apple-blue transition-colors">
-                        {game.title}
-                      </h3>
-                      <div className="flex items-center">
+                    <h3 className="text-lg font-semibold mb-2">{game.title}</h3>
+                    <div className="flex items-center mb-4">
+                      <div className="flex">
                         {[1, 2, 3, 4, 5].map((star) => (
                           <FaStar
                             key={star}
