@@ -49,14 +49,16 @@
       "updatedAt": "2024-03-24T00:00:00.000Z"
     },
     {
-      "title": "SpartaHoppers By OnlineGames.io",
+      "title": "SpartaHoppers",
       "category": "Arcade",
       "iframeUrl": "https://cloud.onlinegames.io/games/2025/construct/227/spartahoppers/index-og.html",
       "thumbnail": "https://www.onlinegames.io/media/posts/949/responsive/sparta-hoppers-game-lg.jpg",
       "status": "active",
-      "id": 5,
+      "id": "5",
       "addedDate": "2025-03-24",
-      "playCount": 0
+      "playCount": 0,
+      "createdAt": "2024-03-24T00:00:00.000Z",
+      "updatedAt": "2024-03-24T00:00:00.000Z"
     },
     {
       "title": "Monster Truck Mountain Climb",
@@ -64,9 +66,11 @@
       "iframeUrl": "https://cloud.onlinegames.io/games/2021/2/monster-truck-mountain-climb/index-og.html",
       "thumbnail": "https://www.onlinegames.io/media/posts/924/responsive/monster-truck-mountain-climb-lg.jpg",
       "status": "active",
-      "id": 6,
+      "id": "6",
       "addedDate": "2025-03-24",
-      "playCount": 0
+      "playCount": 0,
+      "createdAt": "2024-03-24T00:00:00.000Z",
+      "updatedAt": "2024-03-24T00:00:00.000Z"
     },
     {
       "title": "Car Football",
@@ -74,9 +78,11 @@
       "iframeUrl": "https://www.onlinegames.io/games/2023/construct/198/car-football/index.html",
       "thumbnail": "https://www.onlinegames.io/media/posts/405/responsive/Car-Football-lg.jpg",
       "status": "active",
-      "id": 7,
+      "id": "7",
       "addedDate": "2025-03-24",
-      "playCount": 0
+      "playCount": 0,
+      "createdAt": "2024-03-24T00:00:00.000Z",
+      "updatedAt": "2024-03-24T00:00:00.000Z"
     },
     {
       "title": "Highway Cars",
