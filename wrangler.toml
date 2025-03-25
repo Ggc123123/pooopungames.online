@@ -16,4 +16,8 @@ routes = [
 ]
 
 [env]
-NODE_VERSION = "18" 
+NODE_VERSION = "18"
+
+[[routes]]
+pattern = "pooopungames.online"
+custom_domain = true 
