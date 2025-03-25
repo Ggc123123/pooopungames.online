@@ -30,7 +30,7 @@ export async function PUT(
   try {
     const storage = Storage.getInstance()
     const data = await request.json()
-    const updatedGame = storage.updateGame(Number(params.id), data)
+    const updatedGame = storage.updateGame(params.id, data)
     
     if (!updatedGame) {
       return NextResponse.json(
@@ -55,7 +55,7 @@ export async function DELETE(
 ) {
   try {
     const storage = Storage.getInstance()
-    const success = storage.deleteGame(Number(params.id))
+    const success = storage.deleteGame(params.id)
     
     if (!success) {
       return NextResponse.json(
