@@ -90,6 +90,12 @@ export class Storage {
 
   public addGame(game: Omit<Game, 'id' | 'createdAt' | 'updatedAt' | 'playCount'>): Game {
     try {
+      // 检查标题是否已存在
+      const existingGame = this.data.games.find(g => g.title.toLowerCase() === game.title.toLowerCase())
+      if (existingGame) {
+        throw new Error('游戏标题已存在')
+      }
+
       const now = new Date().toISOString()
       const newGame: Game = {
         ...game,
@@ -104,7 +110,7 @@ export class Storage {
       return newGame
     } catch (error) {
       console.error('Error in addGame:', error)
-      throw new Error('Failed to add game: ' + (error instanceof Error ? error.message : String(error)))
+      throw new Error('添加游戏失败: ' + (error instanceof Error ? error.message : String(error)))
     }
   }
 
