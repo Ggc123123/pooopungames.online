@@ -5,6 +5,7 @@ compatibility_date = "2024-03-24"
 command = "npm run build"
 cwd = "."
 dist = ".next"
+pages_build_output_dir = "out"
 
 [site]
 bucket = ".next/static"
@@ -13,4 +14,7 @@ entry-point = "."
 [env.production]
 routes = [
   { pattern = "pooopungames.online", custom_domain = true }
-] 
+]
+
+[env]
+NODE_VERSION = "18" 
