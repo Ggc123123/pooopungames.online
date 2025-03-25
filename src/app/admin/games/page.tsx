@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { FaPlus, FaEdit, FaTrash, FaGamepad, FaChartLine, FaUsers, FaPlayCircle, FaEye } from 'react-icons/fa'
-import { Game, Stats } from '@/lib/storage'
+import { Game } from '@/types/game'
+import { Stats } from '@/lib/storage'
 import Image from 'next/image'
 
 export default function GamesManagement() {
