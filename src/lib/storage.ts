@@ -2,7 +2,8 @@ import fs from 'fs'
 import path from 'path'
 import { Game } from '@/types/game'
 
-const DATA_FILE = path.join(process.cwd(), 'src/data/games.json')
+// 使用相对路径
+const DATA_FILE = path.join('src', 'data', 'games.json')
 
 export interface Stats {
   totalVisits: number
@@ -43,7 +44,31 @@ export class Storage {
 
   private readData(): StorageData {
     try {
-      const rawData = fs.readFileSync(DATA_FILE, 'utf-8')
+      // 尝试多个可能的路径
+      let rawData: string | null = null
+      const possiblePaths = [
+        DATA_FILE,
+        path.join(process.cwd(), DATA_FILE),
+        path.join(process.cwd(), 'public', DATA_FILE)
+      ]
+
+      for (const filePath of possiblePaths) {
+        try {
+          if (fs.existsSync(filePath)) {
+            rawData = fs.readFileSync(filePath, 'utf-8')
+            console.log('Successfully read from:', filePath)
+            break
+          }
+        } catch (e) {
+          console.log('Failed to read from:', filePath)
+        }
+      }
+
+      if (!rawData) {
+        console.error('Could not find games.json in any location')
+        throw new Error('Games data file not found')
+      }
+
       const data = JSON.parse(rawData)
       // 确保所有游戏的 ID 都是字符串类型
       data.games = data.games.map((game: Game) => ({
@@ -69,11 +94,12 @@ export class Storage {
 
   private saveData(): void {
     try {
-      const dirPath = path.dirname(DATA_FILE)
+      const filePath = path.join(process.cwd(), DATA_FILE)
+      const dirPath = path.dirname(filePath)
       if (!fs.existsSync(dirPath)) {
         fs.mkdirSync(dirPath, { recursive: true })
       }
-      fs.writeFileSync(DATA_FILE, JSON.stringify(this.data, null, 2))
+      fs.writeFileSync(filePath, JSON.stringify(this.data, null, 2))
     } catch (error) {
       console.error('Error saving data file:', error)
       throw new Error('Failed to save data: ' + (error instanceof Error ? error.message : String(error)))
