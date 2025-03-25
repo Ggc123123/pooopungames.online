@@ -69,9 +69,14 @@ export class Storage {
 
   private saveData(): void {
     try {
+      const dirPath = path.dirname(DATA_FILE)
+      if (!fs.existsSync(dirPath)) {
+        fs.mkdirSync(dirPath, { recursive: true })
+      }
       fs.writeFileSync(DATA_FILE, JSON.stringify(this.data, null, 2))
     } catch (error) {
       console.error('Error saving data file:', error)
+      throw new Error('Failed to save data: ' + (error instanceof Error ? error.message : String(error)))
     }
   }
 
@@ -84,17 +89,23 @@ export class Storage {
   }
 
   public addGame(game: Omit<Game, 'id' | 'createdAt' | 'updatedAt' | 'playCount'>): Game {
-    const now = new Date().toISOString()
-    const newGame: Game = {
-      ...game,
-      id: Math.random().toString(36).substr(2, 9),
-      createdAt: now,
-      updatedAt: now,
-      playCount: 0
+    try {
+      const now = new Date().toISOString()
+      const newGame: Game = {
+        ...game,
+        id: Math.random().toString(36).substr(2, 9),
+        createdAt: now,
+        updatedAt: now,
+        playCount: 0,
+        addedDate: now
+      }
+      this.data.games.push(newGame)
+      this.saveData()
+      return newGame
+    } catch (error) {
+      console.error('Error in addGame:', error)
+      throw new Error('Failed to add game: ' + (error instanceof Error ? error.message : String(error)))
     }
-    this.data.games.push(newGame)
-    this.saveData()
-    return newGame
   }
 
   public updateGame(id: string, updates: Partial<Game>): Game | null {

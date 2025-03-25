@@ -9,5 +9,5 @@ export interface Game {
   createdAt: string;
   updatedAt: string;
   status: 'active' | 'inactive';
-  addedDate: string;
+  addedDate?: string;
 } 
