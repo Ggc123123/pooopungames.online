@@ -6,9 +6,11 @@
       "iframeUrl": "https://cloud.onlinegames.io/games/2024/unity2/survival-island/index-og.html",
       "thumbnail": "https://www.onlinegames.io/media/posts/970/responsive/Survival-Island-lg.jpg",
       "status": "active",
-      "id": 1,
+      "id": "1",
       "addedDate": "2025-03-24",
-      "playCount": 0
+      "playCount": 0,
+      "createdAt": "2024-03-24T00:00:00.000Z",
+      "updatedAt": "2024-03-24T00:00:00.000Z"
     },
     {
       "title": "Mahjong",
@@ -16,19 +18,23 @@
       "iframeUrl": "https://cloud.onlinegames.io/games/2025/unity/mahjong/index-og.html",
       "thumbnail": "https://www.onlinegames.io/media/posts/966/responsive/Mahjong-lg.jpg",
       "status": "active",
-      "id": 2,
+      "id": "2",
       "addedDate": "2025-03-24",
-      "playCount": 0
+      "playCount": 0,
+      "createdAt": "2024-03-24T00:00:00.000Z",
+      "updatedAt": "2024-03-24T00:00:00.000Z"
     },
     {
-      "title": "Tank Arena By OnlineGames.io",
+      "title": "Tank Arena",
       "category": "Board",
       "iframeUrl": "https://cloud.onlinegames.io/games/2025/construct/293/tank-arena/index-og.html",
       "thumbnail": "https://www.onlinegames.io/media/posts/956/responsive/Tank-Arena-Online-lg.jpg",
       "status": "active",
-      "id": 3,
+      "id": "3",
       "addedDate": "2025-03-24",
-      "playCount": 0
+      "playCount": 0,
+      "createdAt": "2024-03-24T00:00:00.000Z",
+      "updatedAt": "2024-03-24T00:00:00.000Z"
     },
     {
       "title": "Monster Survivors",
@@ -36,9 +42,11 @@
       "iframeUrl": "https://cloud.onlinegames.io/games/2025/unity/monster-survivors/index-og.html",
       "thumbnail": "https://www.onlinegames.io/media/posts/942/responsive/Monster-survivors-lg.jpg",
       "status": "active",
-      "id": 4,
+      "id": "4",
       "addedDate": "2025-03-24",
-      "playCount": 0
+      "playCount": 0,
+      "createdAt": "2024-03-24T00:00:00.000Z",
+      "updatedAt": "2024-03-24T00:00:00.000Z"
     },
     {
       "title": "SpartaHoppers By OnlineGames.io",
@@ -73,12 +81,14 @@
     {
       "title": "Highway Cars",
       "category": "Action",
-      "iframeUrl": " https://www.onlinegames.io/games/2023/construct/211/highway-cars/index.html",
+      "iframeUrl": "https://www.onlinegames.io/games/2023/construct/211/highway-cars/index.html",
       "thumbnail": "https://www.onlinegames.io/media/posts/598/responsive/Highway-Cars-lg.jpg",
       "status": "active",
-      "id": 8,
+      "id": "8",
       "addedDate": "2025-03-24",
-      "playCount": 0
+      "playCount": 0,
+      "createdAt": "2024-03-24T00:00:00.000Z",
+      "updatedAt": "2024-03-24T00:00:00.000Z"
     }
   ],
   "stats": {
